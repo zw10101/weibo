@@ -16,7 +16,7 @@ class StaticPagesController extends Controller
         return view('static_pages/help');
     }
 
-    public function about()//帮助页
+    public function about()//帮助页dsadasdsa
     {
         return view('static_pages/about');
     }
