@@ -18,6 +18,7 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
+    //注册
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -35,6 +36,28 @@ class UsersController extends Controller
         Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]);
+    }
+
+    //编辑
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    //更新
+    public function update(User $user, Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:50',
+            'password' => 'required|confirmed|min:6'
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('users.show', $user->id);
     }
 
     
